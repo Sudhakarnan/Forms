@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registration | amasQIS.ai</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <style>
+    .logo-text { font-family: 'Montserrat', sans-serif; letter-spacing: 2px;}
+    .fade-in { opacity: 0; transform: translateY(32px); transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);}
+    .fade-in.show { opacity: 1; transform: translateY(0);}
+    .input-anim { transition: border 0.2s, box-shadow 0.2s;}
+    .focus-style:focus { border-color: #6366f1 !important; box-shadow: 0 0 0 3px #dbeafe;}
+    .shake { animation: shake 0.25s 1;}
+    @keyframes shake {
+      0% { transform: translateX(0);}
+      20% { transform: translateX(-6px);}
+      40% { transform: translateX(6px);}
+      60% { transform: translateX(-4px);}
+      80% { transform: translateX(4px);}
+      100% { transform: translateX(0);}
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-tr from-blue-100 via-white to-pink-100 flex items-center justify-center p-3">
+
+<div class="w-full max-w-md mx-auto bg-white/95 rounded-3xl shadow-2xl px-6 py-8 fade-in">
+
+  <!-- Logo/heading -->
+  <div class="flex flex-col items-center mb-7">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" class="w-12 h-12 mb-2" alt="logo"/>
+    <div class="logo-text text-2xl font-bold text-blue-700 mb-1">amasQIS.ai</div>
+    <h1 class="text-xl font-extrabold text-blue-800 mb-1 text-center">Register your Account</h1>
+    <div class="text-sm text-gray-400 mb-1 text-center">Create your amasQIS profile</div>
+  </div>
+
+  <form id="regForm" action="register.php" method="POST" autocomplete="off" novalidate>
+    <!-- Name -->
+    <div class="mb-5">
+      <label for="name" class="block text-blue-700 font-semibold mb-1">Full Name</label>
+      <input type="text" id="name" name="name" required
+        class="w-full px-4 py-3 rounded-2xl border-2 border-gray-200 bg-gray-50 input-anim focus-style text-base outline-none shadow focus:shadow-lg"
+        placeholder="Enter your full name"/>
+      <div id="nameErr" class="text-pink-500 text-xs mt-1 hidden">Please enter your name.</div>
+    </div>
+    <!-- Email -->
+    <div class="mb-5">
+      <label for="email" class="block text-blue-700 font-semibold mb-1">Email</label>
+      <input type="email" id="email" name="email" required
+        class="w-full px-4 py-3 rounded-2xl border-2 border-gray-200 bg-gray-50 input-anim focus-style text-base outline-none shadow focus:shadow-lg"
+        placeholder="Enter your email address"/>
+      <div id="emailErr" class="text-pink-500 text-xs mt-1 hidden">Enter a valid email address.</div>
+    </div>
+    <!-- Password -->
+    <div class="mb-2 relative">
+      <label for="password" class="block text-blue-700 font-semibold mb-1">Password</label>
+      <input type="password" id="password" name="password" required minlength="6"
+        class="w-full px-4 py-3 rounded-2xl border-2 border-gray-200 bg-gray-50 input-anim focus-style text-base outline-none shadow focus:shadow-lg pr-12"
+        placeholder="Create a password"/>
+      <button type="button" tabindex="-1"
+        class="absolute right-4 top-9 transform -translate-y-1/2 text-gray-400 hover:text-blue-500 focus:outline-none"
+        onclick="togglePassword()">
+        <svg id="eyeIcon" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+      <div id="passErr" class="text-pink-500 text-xs mt-1 hidden">Password must be at least 6 characters.</div>
+    </div>
+    <!-- Confirm Password -->
+    <div class="mb-6 relative">
+      <label for="confirmPassword" class="block text-blue-700 font-semibold mb-1">Confirm Password</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" required minlength="6"
+        class="w-full px-4 py-3 rounded-2xl border-2 border-gray-200 bg-gray-50 input-anim focus-style text-base outline-none shadow focus:shadow-lg pr-12"
+        placeholder="Re-enter your password"/>
+      <button type="button" tabindex="-1"
+        class="absolute right-4 top-9 transform -translate-y-1/2 text-gray-400 hover:text-blue-500 focus:outline-none"
+        onclick="toggleConfirmPassword()">
+        <svg id="eyeIcon2" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+      <div id="cpassErr" class="text-pink-500 text-xs mt-1 hidden">Passwords do not match.</div>
+    </div>
+    <!-- Register Button -->
+    <button type="submit"
+      class="w-full py-3 rounded-2xl bg-gradient-to-r from-blue-500 to-pink-400 text-white font-bold text-lg shadow-lg hover:from-pink-400 hover:to-blue-500 transition-all active:scale-95 focus:ring-2 focus:ring-blue-300">
+      Register
+    </button>
+    <!-- Success/error message -->
+    <div id="regMsg" class="text-center text-sm mt-5"></div>
+  </form>
+</div>
+
+<script>
+window.addEventListener('DOMContentLoaded', () => setTimeout(() => document.querySelector('.fade-in').classList.add('show'), 100));
+
+// Eye icon toggle
+function togglePassword() {
+  const pwd = document.getElementById('password');
+  const icon = document.getElementById('eyeIcon');
+  if (pwd.type === "password") {
+    pwd.type = "text";
+    icon.innerHTML = '<path d="M17.94 17.94a10.12 10.12 0 0 1-11.88 0"/><path d="M1 1l22 22"/>';
+  } else {
+    pwd.type = "password";
+    icon.innerHTML = '<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/>';
+  }
+}
+function toggleConfirmPassword() {
+  const pwd = document.getElementById('confirmPassword');
+  const icon = document.getElementById('eyeIcon2');
+  if (pwd.type === "password") {
+    pwd.type = "text";
+    icon.innerHTML = '<path d="M17.94 17.94a10.12 10.12 0 0 1-11.88 0"/><path d="M1 1l22 22"/>';
+  } else {
+    pwd.type = "password";
+    icon.innerHTML = '<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/>';
+  }
+}
+
+// JS Validation before submitting to PHP
+const regForm = document.getElementById('regForm');
+const emailRE = /^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/;
+
+regForm.onsubmit = function(e) {
+  // JS validation
+  let valid = true;
+  ['nameErr','emailErr','passErr','cpassErr','regMsg'].forEach(id => document.getElementById(id).classList.add('hidden'));
+  document.getElementById('regMsg').textContent = "";
+
+  if(!regForm.name.value.trim()) { valid = false; showErr('nameErr'); shake('name'); }
+  if(!emailRE.test(regForm.email.value.trim())) { valid = false; showErr('emailErr'); shake('email'); }
+  if(regForm.password.value.length < 6) { valid = false; showErr('passErr'); shake('password'); }
+  if(regForm.password.value !== regForm.confirmPassword.value) { valid = false; showErr('cpassErr'); shake('confirmPassword'); }
+
+  if(!valid) { e.preventDefault(); }
+};
+function showErr(id) { document.getElementById(id).classList.remove('hidden'); }
+function shake(fieldId) {
+  const el = document.getElementById(fieldId);
+  el.classList.add('shake');
+  setTimeout(()=>el.classList.remove('shake'), 300);
+}
+</script>
+</body>
+</html>
+
