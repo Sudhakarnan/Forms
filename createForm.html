@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create a New Form | amasQIS.ai</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.7s cubic-bezier(.4, 0, .2, 1), transform 0.7s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .fade-in.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .input-anim {
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+
+        .question-block,
+        .option-block {
+            transition: box-shadow 0.2s, background 0.2s;
+        }
+
+        .option-input:focus {
+            border-color: #60a5fa !important;
+        }
+
+        .popover-modal {
+            z-index: 50;
+            min-width: 200px;
+            max-width: 300px;
+            position: absolute;
+            background: white;
+            box-shadow: 0 10px 32px 0 rgba(30, 41, 59, 0.14);
+            border-radius: 1rem;
+            padding: 1.2rem 1rem 1rem 1rem;
+            border: 1px solid #e0e7ef;
+            animation: fadeInUp 0.25s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .star {
+            color: #eab308;
+            font-size: 1.2rem;
+            margin-right: 2px;
+        }
+
+        .move-btn {
+            transition: background 0.18s, color 0.18s;
+        }
+
+        .move-btn:hover {
+            background: #bfdbfe !important;
+            color: #1e3a8a !important;
+        }
+
+        .q-label {
+            transition: color 0.15s;
+        }
+
+        .img-preview {
+            max-width: 100%;
+            max-height: 120px;
+            border-radius: 0.75rem;
+            margin-bottom: 8px;
+            border: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-tr from-blue-100 via-white to-pink-100 flex items-center justify-center p-2">
+
+    <div
+        class="w-full max-w-3xl mx-auto bg-white/90 rounded-3xl shadow-2xl p-5 sm:p-8 border border-blue-100 fade-in relative">
+
+        <!-- Title -->
+        <div class="mb-8 flex flex-col items-center">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" class="w-12 h-12 mb-2"
+                alt="logo" />
+            <div class="logo-text text-2xl font-bold text-blue-700 mb-1">amasQIS.ai</div>
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-blue-800 mb-1 text-center">Create a New Form</h1>
+            <div class="text-sm text-gray-500 mb-2 text-center">Build your custom registration & test forms</div>
+        </div>
+
+        <form id="formBuilder" autocomplete="off" class="space-y-8">
+
+            <!-- Form Name -->
+            <div>
+                <label class="font-semibold text-blue-800">Form Name <span class="text-pink-500">*</span></label>
+                <input type="text" id="formName" name="form_name" required maxlength="80"
+                    class="block w-full mt-2 px-4 py-3 rounded-2xl bg-gray-50 border-2 border-gray-200 focus:border-blue-500 input-anim outline-none text-lg placeholder-gray-400 shadow focus:shadow-lg"
+                    placeholder="e.g., Job Application, Feedback Form" />
+                <div id="formNameError" class="text-pink-500 text-xs mt-1 hidden">Please enter the form name.</div>
+            </div>
+
+            <!-- Registration Section -->
+            <section>
+                <h3 class="font-bold text-lg mb-3 text-blue-700 flex items-center gap-2">🧾 Registration Form
+                    <span class="font-normal text-xs text-gray-400">(User Details)</span>
+                </h3>
+                <div id="registrationFields" class="space-y-5"></div>
+                <div class="relative">
+                    <button type="button" id="addRegFieldBtn"
+                        class="mt-4 flex items-center gap-1 px-4 py-2 rounded-2xl bg-blue-100 hover:bg-blue-400 hover:text-white transition font-semibold text-blue-700 shadow active:scale-95 focus:ring-2 focus:ring-blue-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M12 5v14m7-7H5" />
+                        </svg>
+                        Add Registration Field
+                    </button>
+                </div>
+            </section>
+
+            <!-- Test Section -->
+            <section>
+                <h3 class="font-bold text-lg mb-3 text-blue-700 flex items-center gap-2">🧪 Test Form
+                    <span class="font-normal text-xs text-gray-400">(Questionnaire)</span>
+                </h3>
+                <div id="testFields" class="space-y-5"></div>
+                <div class="relative">
+                    <button type="button" id="addTestFieldBtn"
+                        class="mt-4 flex items-center gap-1 px-4 py-2 rounded-2xl bg-pink-100 hover:bg-pink-400 hover:text-white transition font-semibold text-pink-700 shadow active:scale-95 focus:ring-2 focus:ring-pink-300">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M12 5v14m7-7H5" />
+                        </svg>
+                        Add Test Question
+                    </button>
+                </div>
+            </section>
+
+            <!-- Create Form Button -->
+            <div class="flex justify-center pt-4">
+                <button type="submit"
+                    class="px-8 py-3 rounded-2xl bg-gradient-to-r from-blue-500 to-pink-400 text-white font-bold text-lg shadow-lg hover:from-pink-400 hover:to-blue-500 transition-all active:scale-95 focus:ring-2 focus:ring-blue-300"
+                    id="createFormBtn">
+                    Create Form
+                </button>
+            </div>
+        </form>
+
+        <!-- Popover Modal for field types -->
+        <div id="fieldTypePopover" class="popover-modal hidden"></div>
+    </div>
+
+    <script>
+        // --- Entrance animation
+        window.addEventListener('DOMContentLoaded', () => setTimeout(() => document.querySelector('.fade-in').classList.add('show'), 100));
+
+        // --- Modal logic ---
+        const fieldTypePopover = document.getElementById('fieldTypePopover');
+        let popoverCallback = null;
+
+        const regTypes = [
+            { type: 'text', label: 'Text' },
+            { type: 'email', label: 'Email' },
+            { type: 'phone', label: 'Phone' },
+            { type: 'date', label: 'Date' },
+            { type: 'time', label: 'Time' },
+            { type: 'file', label: 'File' },
+            { type: 'image', label: 'Image File' },
+            { type: 'audio', label: 'Audio File' },
+            { type: 'video', label: 'Video File' },
+            { type: 'select', label: 'Select' },
+            { type: 'radio', label: 'Radio' },
+            { type: 'checkbox', label: 'Checkbox' },
+            { type: 'link', label: 'Link' },
+            { type: 'rating', label: 'Rating' },
+            { type: 'range', label: 'Range' }
+        ];
+        const testTypes = [
+            { type: 'text', label: 'Text' },
+            { type: 'textarea', label: 'Textarea' },
+            { type: 'select', label: 'Select' },
+            { type: 'radio', label: 'Radio' },
+            { type: 'checkbox', label: 'Checkbox' },
+            { type: 'url', label: 'URL' },
+            { type: 'file', label: 'File' },
+            { type: 'image', label: 'Image File' },
+            { type: 'audio', label: 'Audio File' },
+            { type: 'video', label: 'Video File' },
+            { type: 'date', label: 'Date' },
+            { type: 'time', label: 'Time' },
+            { type: 'range', label: 'Range' },
+            { type: 'rating', label: 'Rating' },
+            { type: 'link', label: 'Link' },
+            { type: 'imageq', label: 'Image with Question' }
+        ];
+        function getIcon(type) {
+            const icons = {
+                text: '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="2" rx="1"/><rect x="5" y="7" width="14" height="2" rx="1"/><rect x="5" y="15" width="14" height="2" rx="1"/></svg>',
+                textarea: '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 5v14"/><path d="M16 5v14"/></svg>',
+                email: '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>',
+                phone: '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92V19a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3 5.18 2 2 0 0 1 5 3h2.09a2 2 0 0 1 2 1.72 12.13 12.13 0 0 0 .57 2.6 2 2 0 0 1-.45 2.11l-.27.27a16 16 0 0 0 6.29 6.3l.27-.28a2 2 0 0 1 2.11-.45 12.13 12.13 0 0 0 2.6.57A2 2 0 0 1 21 16.91z"/></svg>',
+                date: '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+                time: '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+                file: '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>',
+                image: '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>',
+                audio: '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="5" width="15" height="14" rx="2"/><polygon points="17 16 22 12 17 8 17 16"/></svg>',
+                video: '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="15" height="10" rx="2"/><polygon points="23 7 16 12 23 17 23 7"/></svg>',
+                select: '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="9 9 12 12 15 9"/></svg>',
+                radio: '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>',
+                checkbox: '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><polyline points="9 11 12 14 17 9"/></svg>',
+                url: '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 7a5 5 0 0 1 0 7l-4 4a5 5 0 0 1-7-7l4-4a5 5 0 0 1 7 0z"/><path d="M12 8v8"/></svg>',
+                link: '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 1 0-7"/><path d="M14 11a5 5 0 0 0 0-7"/><path d="M7 17a5 5 0 0 1 7 0"/><path d="M17 21a5 5 0 0 0-7 0"/></svg>',
+                rating: '<svg class="w-6 h-6" fill="currentColor" stroke="none" viewBox="0 0 24 24"><path d="M12 .587l3.668 7.431L24 9.748l-6 5.84L19.334 24 12 20.19 4.666 24 6 15.588 0 9.748l8.332-1.73z"/></svg>',
+                range: '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="2" rx="1"/><circle cx="8" cy="12" r="3"/><circle cx="16" cy="12" r="3"/></svg>',
+                imageq: '<svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>'
+            };
+            return icons[type] || '';
+        }
+        function openFieldTypePopover(types, triggerBtn, cb) {
+            popoverCallback = cb;
+            fieldTypePopover.innerHTML = `
+    <div class="font-bold text-blue-700 mb-2 text-center">Choose Field Type</div>
+    <div class="grid grid-cols-2 gap-2 mb-2">
+      ${types.map(typeObj => `
+        <button type="button"
+          class="flex flex-col items-center p-3 rounded-2xl bg-blue-50 hover:bg-blue-400 hover:text-white text-blue-700 font-bold text-xs shadow focus:ring-2 focus:ring-blue-200 transition-all"
+          data-type="${typeObj.type}">
+          ${getIcon(typeObj.type)}
+          <span class="mt-1">${typeObj.label}</span>
+        </button>
+      `).join('')}
+    </div>
+    <button type="button" class="w-full mt-2 px-4 py-2 rounded-2xl bg-gray-100 hover:bg-gray-200 text-gray-500 font-semibold text-xs close-popover">Cancel</button>
+  `;
+            // Position popover near button
+            const rect = triggerBtn.getBoundingClientRect();
+            fieldTypePopover.style.top = (window.scrollY + rect.bottom + 6) + "px";
+            let left = window.scrollX + rect.left;
+            if (window.innerWidth - left < 320) left = window.innerWidth - 330;
+            fieldTypePopover.style.left = left + "px";
+            fieldTypePopover.classList.remove('hidden');
+        }
+        document.body.addEventListener('click', function (e) {
+            if (e.target.closest('#fieldTypePopover [data-type]')) {
+                fieldTypePopover.classList.add('hidden');
+                let t = e.target.closest('button').getAttribute('data-type');
+                if (popoverCallback) popoverCallback(t);
+            }
+            if (e.target.closest('.close-popover')) fieldTypePopover.classList.add('hidden');
+            if (!e.target.closest('#fieldTypePopover') && !e.target.closest('#addRegFieldBtn') && !e.target.closest('#addTestFieldBtn')) {
+                fieldTypePopover.classList.add('hidden');
+            }
+        });
+
+        // --- Field rendering logic ---
+        const registrationFields = document.getElementById('registrationFields');
+        const testFields = document.getElementById('testFields');
+        let regFieldCount = 0, testFieldCount = 0;
+
+        function updateQuestionNumbers(sectionDiv) {
+            let n = 1;
+            sectionDiv.querySelectorAll('.question-block').forEach(block => {
+                let qlabel = block.querySelector('.q-label');
+                if (qlabel) {
+                    qlabel.textContent = 'Q' + (n++) + '.';
+                }
+            });
+        }
+
+        // Add registration field
+        document.getElementById('addRegFieldBtn').onclick = function (e) {
+            openFieldTypePopover(regTypes, this, type => {
+                regFieldCount++;
+                registrationFields.appendChild(renderQuestionBlock({
+                    section: 'reg',
+                    idx: regFieldCount,
+                    type,
+                    label: '',
+                    options: ['Option 1', 'Option 2'].slice(0, (type === 'select' || type === 'radio' || type === 'checkbox') ? 2 : 0)
+                }));
+                updateQuestionNumbers(registrationFields);
+            });
+        };
+        // Add test field
+        document.getElementById('addTestFieldBtn').onclick = function (e) {
+            openFieldTypePopover(testTypes, this, type => {
+                testFieldCount++;
+                testFields.appendChild(renderQuestionBlock({
+                    section: 'test',
+                    idx: testFieldCount,
+                    type,
+                    label: '',
+                    options: ['Option 1', 'Option 2'].slice(0, (type === 'select' || type === 'radio' || type === 'checkbox') ? 2 : 0)
+                }));
+                updateQuestionNumbers(testFields);
+            });
+        };
+
+        function moveBlock(btn, direction) {
+            const block = btn.closest('.question-block, .imageq-block');
+            if (direction === 'up' && block.previousElementSibling) {
+                block.parentNode.insertBefore(block, block.previousElementSibling);
+            }
+            if (direction === 'down' && block.nextElementSibling) {
+                block.parentNode.insertBefore(block.nextElementSibling, block);
+            }
+            // Update numbers
+            if (block.parentNode === registrationFields) updateQuestionNumbers(registrationFields);
+            if (block.parentNode === testFields) updateQuestionNumbers(testFields);
+        }
+        function removeBlock(btn) {
+            const block = btn.closest('.question-block, .imageq-block');
+            const section = block.parentNode;
+            block.remove();
+            if (section === registrationFields) updateQuestionNumbers(registrationFields);
+            if (section === testFields) updateQuestionNumbers(testFields);
+        }
+        function addOption(btn) {
+            const optionsDiv = btn.closest('.options').querySelector('.option-list');
+            const input = document.createElement('div');
+            input.className = 'option-block flex items-center mb-2 gap-2';
+            input.innerHTML = `<input type="text" required placeholder="Option ${optionsDiv.children.length + 1}" class="option-input flex-1 px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 focus:border-blue-500"/><button type="button" class="remove-option-btn text-gray-400 hover:text-pink-600 text-xl font-bold transition" title="Remove Option">&times;</button>`;
+            optionsDiv.appendChild(input);
+        }
+        function removeOption(btn) {
+            btn.parentNode.remove();
+        }
+
+        // --- Render blocks
+        function renderQuestionBlock({ section, idx, type, label, options }) {
+            if (type === 'imageq') return renderImageQBlock({ section, idx });
+            const block = document.createElement('div');
+            block.className = "question-block rounded-2xl bg-blue-50/50 p-4 shadow hover:shadow-xl transition relative mb-2 flex flex-col";
+            let inputId = `${section}_${type}_${idx}`;
+            let updown = `
+    <div class="flex flex-col absolute left-2 top-2 z-10">
+      <button type="button" title="Move Up" class="move-btn rounded-full p-1 hover:bg-blue-100 mb-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg></button>
+      <button type="button" title="Move Down" class="move-btn rounded-full p-1 hover:bg-blue-100"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+    </div>
+  `;
+            let labelHtml = `
+    <label class="block mb-2 font-semibold text-blue-700 text-base">
+      <span class="q-label"></span>
+      <input type="text" name="${inputId}_label" placeholder="Enter your question here..." class="w-full mt-1 px-3 py-2 rounded-xl border border-gray-200 bg-white focus:border-blue-500 input-anim shadow-sm" value="${label || ''}" required>
+    </label>
+  `;
+            let answerHtml = '';
+            if (['text', 'email', 'phone', 'url', 'number', 'date', 'time', 'link'].includes(type)) {
+                let ph = { text: 'Text input', email: 'Email', phone: 'Phone', url: 'URL', number: 'Number', date: 'Date', time: 'Time', link: 'Link' }[type];
+                answerHtml = `<input type="${type === 'text' ? 'text' : type}" disabled placeholder="Answer (${ph})" class="w-full px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 mt-2" />`;
+            } else if (type === 'textarea') {
+                answerHtml = `<textarea disabled placeholder="Answer (multi-line)" class="w-full px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 mt-2"></textarea>`;
+            } else if (type === 'file' || type === 'image' || type === 'audio' || type === 'video') {
+                answerHtml = `<input type="file" disabled accept="${type === 'image' ? 'image/*' : type === 'audio' ? 'audio/*' : type === 'video' ? 'video/*' : ''}" class="w-full mt-2 px-3 py-2 rounded-xl border border-gray-200 bg-gray-50" />`;
+            } else if (type === 'select' || type === 'radio' || type === 'checkbox') {
+                let optionInputs = (options || []).map((opt, i) => `
+      <div class="option-block flex items-center mb-2 gap-2">
+        <input type="text" required value="${opt || ''}" placeholder="Option ${i + 1}"
+          class="option-input flex-1 px-3 py-2 rounded-xl border border-gray-200 bg-gray-50 focus:border-blue-500"/>
+        <button type="button" class="remove-option-btn text-gray-400 hover:text-pink-600 text-xl font-bold transition" title="Remove Option">&times;</button>
+      </div>
+    `).join('');
+                let optType = type === 'select' ? 'dropdown' : type === 'checkbox' ? 'checkbox group' : 'radio group';
+                answerHtml = `
+      <div class="options mb-2">
+        <div class="option-list">${optionInputs}</div>
+        <button type="button" class="add-option-btn px-3 py-1 mt-2 rounded-xl bg-blue-200 hover:bg-blue-400 text-blue-900 hover:text-white font-semibold transition text-xs">+ Add Option</button>
+      </div>
+      <div class="answer-preview mt-1 text-xs text-gray-500">Answer: (${optType} preview)</div>
+    `;
+            } else if (type === 'rating') {
+                answerHtml = `<div class="flex items-center gap-1 mt-2">${'<span class="star">&#9733;</span>'.repeat(5)}</div><div class="text-xs text-gray-400 ml-1">Rating</div>`;
+            } else if (type === 'range') {
+                answerHtml = `<input type="range" disabled min="1" max="10" class="w-full mt-2" /><div class="text-xs text-gray-400 ml-1">Range (1-10)</div>`;
+            }
+            let removeBtn = `
+    <button type="button" class="absolute top-2 right-2 p-1 rounded-full hover:bg-pink-100 transition remove-block-btn" title="Remove">
+      <svg class="w-5 h-5 text-pink-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <polyline points="3 6 5 6 21 6"/>
+        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
+        <path d="M10 11v6"/>
+        <path d="M14 11v6"/>
+        <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+      </svg>
+    </button>
+  `;
+            block.innerHTML = `${updown}${labelHtml}${answerHtml}${removeBtn}`;
+            // Listeners
+            block.querySelector('.move-btn:nth-child(1)').onclick = e => moveBlock(e.target, 'up');
+            block.querySelector('.move-btn:nth-child(2)').onclick = e => moveBlock(e.target, 'down');
+            block.querySelector('.remove-block-btn').onclick = e => removeBlock(e.target.closest('button'));
+            if (type === 'select' || type === 'radio' || type === 'checkbox') {
+                block.querySelector('.add-option-btn').onclick = e => addOption(e.target);
+                block.querySelector('.option-list').onclick = function (e) {
+                    if (e.target.classList.contains('remove-option-btn')) removeOption(e.target);
+                };
+            }
+            return block;
+        }
+        // "Image with Question" block: not numbered, has upload+preview+move+remove
+        function renderImageQBlock({ section, idx }) {
+            const block = document.createElement('div');
+            block.className = "imageq-block rounded-2xl bg-yellow-50/60 p-4 shadow hover:shadow-xl transition relative mb-2 flex flex-col";
+            let updown = `
+    <div class="flex flex-col absolute left-2 top-2 z-10">
+      <button type="button" title="Move Up" class="move-btn rounded-full p-1 hover:bg-blue-100 mb-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg></button>
+      <button type="button" title="Move Down" class="move-btn rounded-full p-1 hover:bg-blue-100"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
+    </div>
+  `;
+            let imgInput = `
+    <div class="mb-2 mt-2">
+      <input type="file" accept="image/*" class="upload-imageq w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2" />
+      <img class="img-preview mt-2 hidden" alt="Preview"/>
+      <div class="text-xs text-gray-500 mt-1">Upload an image to display above/between questions. This block is movable. (No question number)</div>
+    </div>
+  `;
+            let removeBtn = `
+    <button type="button" class="absolute top-2 right-2 p-1 rounded-full hover:bg-pink-100 transition remove-block-btn" title="Remove">
+      <svg class="w-5 h-5 text-pink-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <polyline points="3 6 5 6 21 6"/>
+        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
+        <path d="M10 11v6"/>
+        <path d="M14 11v6"/>
+        <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+      </svg>
+    </button>
+  `;
+            block.innerHTML = `${updown}${imgInput}${removeBtn}`;
+            // Listeners
+            block.querySelector('.move-btn:nth-child(1)').onclick = e => moveBlock(e.target, 'up');
+            block.querySelector('.move-btn:nth-child(2)').onclick = e => moveBlock(e.target, 'down');
+            block.querySelector('.remove-block-btn').onclick = e => removeBlock(e.target.closest('button'));
+            // Image preview
+            block.querySelector('.upload-imageq').addEventListener('change', function (e) {
+                const file = e.target.files[0];
+                const preview = block.querySelector('.img-preview');
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = e2 => {
+                        preview.src = e2.target.result;
+                        preview.classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    preview.src = '';
+                    preview.classList.add('hidden');
+                }
+            });
+            return block;
+        }
+
+        // -- Delegated listeners for dynamic blocks --
+        registrationFields.addEventListener('click', function (e) {
+            if (e.target.closest('.remove-block-btn')) removeBlock(e.target.closest('.remove-block-btn'));
+            if (e.target.closest('.add-option-btn')) addOption(e.target.closest('.add-option-btn'));
+            if (e.target.classList.contains('remove-option-btn')) removeOption(e.target);
+            if (e.target.closest('.move-btn')) {
+                if (e.target.closest('.move-btn').title === "Move Up") moveBlock(e.target.closest('.move-btn'), 'up');
+                else if (e.target.closest('.move-btn').title === "Move Down") moveBlock(e.target.closest('.move-btn'), 'down');
+            }
+            updateQuestionNumbers(registrationFields);
+        });
+        testFields.addEventListener('click', function (e) {
+            if (e.target.closest('.remove-block-btn')) removeBlock(e.target.closest('.remove-block-btn'));
+            if (e.target.closest('.add-option-btn')) addOption(e.target.closest('.add-option-btn'));
+            if (e.target.classList.contains('remove-option-btn')) removeOption(e.target);
+            if (e.target.closest('.move-btn')) {
+                if (e.target.closest('.move-btn').title === "Move Up") moveBlock(e.target.closest('.move-btn'), 'up');
+                else if (e.target.closest('.move-btn').title === "Move Down") moveBlock(e.target.closest('.move-btn'), 'down');
+            }
+            updateQuestionNumbers(testFields);
+        });
+
+        // --- FORM SUBMISSION and VALIDATION ---
+        document.getElementById('formBuilder').onsubmit = function (e) {
+            e.preventDefault();
+            let valid = true;
+            // Validate form name
+            const formName = document.getElementById('formName').value.trim();
+            if (!formName) {
+                valid = false;
+                document.getElementById('formNameError').classList.remove('hidden');
+            } else {
+                document.getElementById('formNameError').classList.add('hidden');
+            }
+            // Email and phone regex
+            const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,}$/;
+            const phoneRegex = /^[\d\s\-+().]{8,20}$/;
+            // Collect fields
+            function collect(section) {
+                const arr = [];
+                (section === 'reg' ? registrationFields : testFields).childNodes.forEach(block => {
+                    if (block.classList && block.classList.contains('question-block')) {
+                        let label = block.querySelector('input[type="text"]').value.trim();
+                        let type = block.querySelector('input[type="text"]').name.split('_')[1];
+                        if (!label) valid = false;
+                        if (type === "email" && !emailRegex.test(label)) valid = false;
+                        if (type === "phone" && !phoneRegex.test(label)) valid = false;
+                        if (['select', 'radio', 'checkbox'].includes(type)) {
+                            let opts = [];
+                            block.querySelectorAll('.option-list input').forEach(optInput => {
+                                let v = optInput.value.trim();
+                                if (v) opts.push(v); else valid = false;
+                            });
+                            arr.push({ type, label, options: opts });
+                        } else {
+                            arr.push({ type, label });
+                        }
+                    }
+                    if (block.classList && block.classList.contains('imageq-block')) {
+                        // Image with question: get preview src if available
+                        let img = block.querySelector('.img-preview');
+                        arr.push({ type: "imageq", image: img && img.src && !img.classList.contains('hidden') ? img.src : null });
+                    }
+                });
+                return arr;
+            }
+            const regData = collect('reg');
+            const testData = collect('test');
+            if (!valid) {
+                alert("Please fill all required fields, labels, and valid email/phone fields.");
+                return;
+            }
+            // Final data structure
+            const fd = new FormData();
+            fd.append("form_name", formName);
+            fd.append("registration", JSON.stringify(registrationArray));
+            fd.append("test", JSON.stringify(testArray));
+            // For each imageq field, add its file:
+            fd.append("imageq_1", fileObj1); // The first imageq block
+            fd.append("imageq_2", fileObj2); // The second imageq block, etc.
+
+            fetch('save_form.php', {
+                method: 'POST',
+                body: fd
+            }).then(r => r.json()).then(data => {
+                if (data.status === "success") alert("Saved! UID: " + data.form_uid);
+                else alert("Error: " + data.message);
+            });
+
+            //<!-- alert("Form structure JSON:\n" + JSON.stringify(formData, null, 2)); -->
+        };
+    </script>
+</body>
+
+</html>

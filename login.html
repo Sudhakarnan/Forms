@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | amasQIS Forms</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide icons CDN -->
+    <!-- Google Fonts for logo text -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+    <style>
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s cubic-bezier(.4, 0, .2, 1), transform 0.7s cubic-bezier(.4, 0, .2, 1);
+        }
+
+        .fade-in.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scrollbar::-webkit-scrollbar {
+            width: 8px;
+            background: transparent;
+        }
+
+        .scrollbar::-webkit-scrollbar-thumb {
+            background: #e5e7eb;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-tr from-blue-100 via-white to-pink-100 min-h-screen flex items-center justify-center">
+
+    <div id="login-card"
+        class="fade-in max-w-sm w-full rounded-2xl shadow-2xl p-8 bg-white/80 border border-gray-200 relative overflow-hidden backdrop-blur-sm scrollbar">
+
+        <!-- Animated Gradient Circle -->
+        <div
+            class="absolute -top-10 -left-10 w-36 h-36 bg-gradient-to-tr from-blue-200 via-pink-100 to-purple-200 rounded-full opacity-50 blur-2xl animate-spin-slow z-0">
+        </div>
+
+        <!-- Logo and Company Name -->
+        <div class="relative z-10 flex flex-col items-center mb-4">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="Logo"
+                class="w-16 h-16 rounded-full shadow-lg mb-2 bg-white p-2" />
+            <div class="logo-text text-2xl tracking-wide font-bold text-blue-700 drop-shadow-md mb-1">amasQIS.ai</div>
+            <div class="text-base text-gray-600 font-semibold tracking-wider mb-2">amasQIS Forms</div>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="space-y-5 relative z-10">
+            <!-- Email -->
+            <div>
+                <label for="email" class="block text-gray-700 text-sm font-medium mb-1">Email Address</label>
+                <input type="email" id="email" name="email" autocomplete="username"
+                    class="w-full px-4 py-2.5 rounded-2xl bg-gray-100 border-2 border-gray-200 focus:border-blue-500 outline-none transition-all duration-200 ease-in shadow-sm focus:shadow-lg focus:bg-white placeholder-gray-400"
+                    placeholder="you@example.com" required />
+                <p id="emailError" class="text-xs text-red-500 mt-1 hidden">Please enter a valid email.</p>
+            </div>
+            <!-- Password with Toggle Icon -->
+            <div>
+                <label for="password" class="block text-gray-700 text-sm font-medium mb-1">Password</label>
+                <div class="relative">
+                    <input type="password" id="password" name="password" autocomplete="current-password"
+                        class="w-full px-4 py-2.5 rounded-2xl bg-gray-100 border-2 border-gray-200 focus:border-blue-500 outline-none transition-all duration-200 ease-in shadow-sm focus:shadow-lg focus:bg-white placeholder-gray-400 pr-12"
+                        placeholder="********" required minlength="6" />
+                    <!-- Eye Icon -->
+                    <button type="button" id="togglePassword"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-200 transition"
+                        aria-label="Toggle password visibility">
+                        <!-- Eye SVG (show) -->
+                        <svg id="eyeOpen" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M1.5 12s3.5-7 10.5-7 10.5 7 10.5 7-3.5 7-10.5 7S1.5 12 1.5 12z" />
+                            <circle cx="12" cy="12" r="3" stroke-width="2" stroke="currentColor" fill="none" />
+                        </svg>
+                        <!-- Eye Off SVG (hide) -->
+                        <svg id="eyeClosed" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500 hidden"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 3l18 18M10.7 10.7A3 3 0 0112 9a3 3 0 013 3c0 .394-.079.77-.217 1.11M6.14 6.14C4.36 7.69 2.88 9.68 1.5 12c2.78 4.5 7.22 7 10.5 7 1.61 0 3.15-.33 4.55-.94M17.86 17.86C19.64 16.31 21.12 14.32 22.5 12c-2.78-4.5-7.22-7-10.5-7-1.1 0-2.16.16-3.18.45" />
+                        </svg>
+                    </button>
+
+                </div>
+                <p id="passwordError" class="text-xs text-red-500 mt-1 hidden">Password must be at least 6 characters.
+                </p>
+            </div>
+            <!-- Forgot Password -->
+            <div class="flex justify-end">
+                <a href="#" class="text-blue-600 hover:text-blue-800 text-sm underline transition-colors">Forgot
+                    password?</a>
+            </div>
+            <!-- Login Button -->
+            <button type="submit"
+                class="w-full py-2.5 mt-1 rounded-2xl bg-gradient-to-r from-blue-500 to-pink-400 hover:from-pink-400 hover:to-blue-500 focus:ring-2 focus:ring-blue-300 text-white font-bold text-lg shadow-md transition-all duration-200 ease-in-out transform hover:scale-105 focus:scale-105 active:scale-95">
+                Sign In
+            </button>
+            <!-- Divider -->
+            <div class="flex items-center my-4">
+                <hr class="flex-grow border-t border-gray-200" />
+                <span class="mx-3 text-gray-400 text-sm">OR</span>
+                <hr class="flex-grow border-t border-gray-200" />
+            </div>
+            <!-- Social Login (optional) -->
+            <button type="button"
+                class="w-full flex items-center justify-center gap-2 py-2 rounded-2xl border border-gray-200 bg-white hover:bg-gray-100 focus:ring-2 focus:ring-blue-200 transition-all duration-150 shadow-sm">
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="w-5 h-5" />
+                <span class="font-medium text-gray-700">Sign in with Google</span>
+            </button>
+        </form>
+        <!-- Bottom Text -->
+        <div class="text-center text-gray-600 text-sm mt-5 relative z-10">
+            Don’t have an account?
+            <a href="#" class="text-blue-600 hover:underline font-medium">Sign up</a>
+        </div>
+    </div>
+
+    <script>
+        // Animate card entrance
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.lucide) lucide.createIcons();
+            setTimeout(() => {
+                document.getElementById('login-card').classList.add('show');
+                if (window.lucide) window.lucide.createIcons();
+            }, 150);
+        });
+
+        // Password show/hide logic
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        const eyeOpen = document.getElementById('eyeOpen');
+        const eyeClosed = document.getElementById('eyeClosed');
+
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.type === 'password' ? 'text' : 'password';
+            passwordInput.type = type;
+            eyeOpen.classList.toggle('hidden');
+            eyeClosed.classList.toggle('hidden');
+        });
+
+        // Validation logic
+        const emailInput = document.getElementById('email');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const loginForm = document.getElementById('loginForm');
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        loginForm.addEventListener('submit', (e) => {
+            let valid = true;
+
+            // Validate email
+            if (!isValidEmail(emailInput.value.trim())) {
+                emailError.classList.remove('hidden');
+                emailInput.classList.add('border-red-400');
+                valid = false;
+            } else {
+                emailError.classList.add('hidden');
+                emailInput.classList.remove('border-red-400');
+            }
+
+            // Validate password
+            if (passwordInput.value.length < 6) {
+                passwordError.classList.remove('hidden');
+                passwordInput.classList.add('border-red-400');
+                valid = false;
+            } else {
+                passwordError.classList.add('hidden');
+                passwordInput.classList.remove('border-red-400');
+            }
+
+            if (!valid) {
+                e.preventDefault();
+            }
+        });
+
+        // Optional: live validation as user types
+        emailInput.addEventListener('input', () => {
+            if (isValidEmail(emailInput.value.trim())) {
+                emailError.classList.add('hidden');
+                emailInput.classList.remove('border-red-400');
+            }
+        });
+        passwordInput.addEventListener('input', () => {
+            if (passwordInput.value.length >= 6) {
+                passwordError.classList.add('hidden');
+                passwordInput.classList.remove('border-red-400');
+            }
+        });
+    </script>
+</body>
+
+</html>
