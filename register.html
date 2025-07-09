@@ -4,16 +4,15 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login | amasQIS Forms</title>
+    <title>Register | amasQIS Forms</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide icons CDN -->
     <!-- Google Fonts for logo text -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
     <style>
         .logo-text {
             font-family: 'Montserrat', sans-serif;
@@ -45,7 +44,7 @@
 
 <body class="bg-gradient-to-tr from-blue-100 via-white to-pink-100 min-h-screen flex items-center justify-center">
 
-    <div id="login-card"
+    <div id="register-card"
         class="fade-in max-w-sm w-full rounded-2xl shadow-2xl p-8 bg-white/80 border border-gray-200 relative overflow-hidden backdrop-blur-sm scrollbar">
 
         <!-- Animated Gradient Circle -->
@@ -58,27 +57,33 @@
             <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="Logo"
                 class="w-16 h-16 rounded-full shadow-lg mb-2 bg-white p-2" />
             <div class="logo-text text-2xl tracking-wide font-bold text-blue-700 drop-shadow-md mb-1">amasQIS.ai</div>
-            <div class="text-base text-gray-600 font-semibold tracking-wider mb-2">amasQIS Forms</div>
+            <div class="text-base text-gray-600 font-semibold tracking-wider mb-2">Register Account</div>
         </div>
 
-        <!-- Login Form -->
-        <form id="loginForm" class="space-y-5 relative z-10" action="login.php" method="POST" novalidate>
+        <!-- Register Form -->
+        <form id="registerForm" class="space-y-5 relative z-10" action="register.php" method="POST" novalidate>
+            <!-- Name -->
+            <div>
+                <label for="name" class="block text-gray-700 text-sm font-medium mb-1">Full Name</label>
+                <input type="text" id="name" name="name" autocomplete="name"
+                    class="w-full px-4 py-2.5 rounded-2xl bg-gray-100 border-2 border-gray-200 focus:border-blue-500 outline-none transition-all duration-200 ease-in shadow-sm focus:shadow-lg focus:bg-white placeholder-gray-400"
+                    placeholder="Your name" required />
+            </div>
             <!-- Email -->
             <div>
                 <label for="email" class="block text-gray-700 text-sm font-medium mb-1">Email Address</label>
                 <input type="email" id="email" name="email" autocomplete="username"
                     class="w-full px-4 py-2.5 rounded-2xl bg-gray-100 border-2 border-gray-200 focus:border-blue-500 outline-none transition-all duration-200 ease-in shadow-sm focus:shadow-lg focus:bg-white placeholder-gray-400"
                     placeholder="you@example.com" required />
-                <p id="emailError" class="text-xs text-red-500 mt-1 hidden">Please enter a valid email.</p>
+                <p id="emailError" class="text-xs text-red-500 mt-1 hidden">Please enter a valid email address.</p>
             </div>
             <!-- Password with Toggle Icon -->
             <div>
                 <label for="password" class="block text-gray-700 text-sm font-medium mb-1">Password</label>
                 <div class="relative">
-                    <input type="password" id="password" name="password" autocomplete="current-password"
+                    <input type="password" id="password" name="password" autocomplete="new-password"
                         class="w-full px-4 py-2.5 rounded-2xl bg-gray-100 border-2 border-gray-200 focus:border-blue-500 outline-none transition-all duration-200 ease-in shadow-sm focus:shadow-lg focus:bg-white placeholder-gray-400 pr-12"
-                        placeholder="********" required minlength="6" />
-                    <!-- Font Awesome Eye Icon Toggle -->
+                        placeholder="********" required />
                     <button type="button" id="togglePassword"
                         class="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-200 transition"
                         aria-label="Toggle password visibility">
@@ -86,18 +91,28 @@
                         <i id="faEyeClosed" class="fa-solid fa-eye-slash text-gray-500 text-lg hidden"></i>
                     </button>
                 </div>
-                <p id="passwordError" class="text-xs text-red-500 mt-1 hidden">Password must be at least 6 characters.
-                </p>
+                <p id="passwordError" class="text-xs text-red-500 mt-1 hidden">Password must be at least 6 characters.</p>
             </div>
-            <!-- Forgot Password -->
-            <div class="flex justify-end">
-                <a href="#" class="text-blue-600 hover:text-blue-800 text-sm underline transition-colors">Forgot
-                    password?</a>
+            <!-- Confirm Password with Toggle Icon -->
+            <div>
+                <label for="confirmPassword" class="block text-gray-700 text-sm font-medium mb-1">Confirm Password</label>
+                <div class="relative">
+                    <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password"
+                        class="w-full px-4 py-2.5 rounded-2xl bg-gray-100 border-2 border-gray-200 focus:border-blue-500 outline-none transition-all duration-200 ease-in shadow-sm focus:shadow-lg focus:bg-white placeholder-gray-400 pr-12"
+                        placeholder="Re-enter password" required />
+                    <button type="button" id="toggleConfirmPassword"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-200 transition"
+                        aria-label="Toggle confirm password visibility">
+                        <i id="faEyeOpenConfirm" class="fa-solid fa-eye text-gray-500 text-lg"></i>
+                        <i id="faEyeClosedConfirm" class="fa-solid fa-eye-slash text-gray-500 text-lg hidden"></i>
+                    </button>
+                </div>
+                <p id="confirmPasswordError" class="text-xs text-red-500 mt-1 hidden">Passwords do not match.</p>
             </div>
-            <!-- Login Button -->
+            <!-- Register Button -->
             <button type="submit"
                 class="w-full py-2.5 mt-1 rounded-2xl bg-gradient-to-r from-blue-500 to-pink-400 hover:from-pink-400 hover:to-blue-500 focus:ring-2 focus:ring-blue-300 text-white font-bold text-lg shadow-md transition-all duration-200 ease-in-out transform hover:scale-105 focus:scale-105 active:scale-95">
-                Sign In
+                Sign Up
             </button>
             <!-- Divider -->
             <div class="flex items-center my-4">
@@ -109,27 +124,24 @@
         </form>
         <!-- Bottom Text -->
         <div class="text-center text-gray-600 text-sm mt-5 relative z-10">
-            Don’t have an account?
-            <a href="Register.html" class="text-blue-600 hover:underline font-medium">Sign up</a>
+            Already have an account?
+            <a href="login.html" class="text-blue-600 hover:underline font-medium">Sign in</a>
         </div>
     </div>
 
     <script>
-        // Animate card entrance
+        // Entrance animation
         window.addEventListener('DOMContentLoaded', () => {
-            if (window.lucide) lucide.createIcons();
             setTimeout(() => {
-                document.getElementById('login-card').classList.add('show');
-                if (window.lucide) window.lucide.createIcons();
+                document.getElementById('register-card').classList.add('show');
             }, 150);
         });
 
-        // Password show/hide logic using Font Awesome icons
+        // Password show/hide logic for Password field
         const passwordInput = document.getElementById('password');
         const togglePassword = document.getElementById('togglePassword');
         const faEyeOpen = document.getElementById('faEyeOpen');
         const faEyeClosed = document.getElementById('faEyeClosed');
-
         togglePassword.addEventListener('click', () => {
             const type = passwordInput.type === 'password' ? 'text' : 'password';
             passwordInput.type = type;
@@ -137,20 +149,34 @@
             faEyeClosed.classList.toggle('hidden');
         });
 
+        // Password show/hide logic for Confirm Password field
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+        const faEyeOpenConfirm = document.getElementById('faEyeOpenConfirm');
+        const faEyeClosedConfirm = document.getElementById('faEyeClosedConfirm');
+        toggleConfirmPassword.addEventListener('click', () => {
+            const type = confirmPasswordInput.type === 'password' ? 'text' : 'password';
+            confirmPasswordInput.type = type;
+            faEyeOpenConfirm.classList.toggle('hidden');
+            faEyeClosedConfirm.classList.toggle('hidden');
+        });
+
         // Validation logic
         const emailInput = document.getElementById('email');
         const emailError = document.getElementById('emailError');
         const passwordError = document.getElementById('passwordError');
-        const loginForm = document.getElementById('loginForm');
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
+        const registerForm = document.getElementById('registerForm');
 
         function isValidEmail(email) {
             return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         }
 
-        loginForm.addEventListener('submit', (e) => {
+        // Main form validation
+        registerForm.addEventListener('submit', (e) => {
             let valid = true;
 
-            // Validate email
+            // Email validation
             if (!isValidEmail(emailInput.value.trim())) {
                 emailError.classList.remove('hidden');
                 emailInput.classList.add('border-red-400');
@@ -160,7 +186,7 @@
                 emailInput.classList.remove('border-red-400');
             }
 
-            // Validate password
+            // Password validation
             if (passwordInput.value.length < 6) {
                 passwordError.classList.remove('hidden');
                 passwordInput.classList.add('border-red-400');
@@ -170,22 +196,50 @@
                 passwordInput.classList.remove('border-red-400');
             }
 
+            // Confirm password validation
+            if (confirmPasswordInput.value !== passwordInput.value || confirmPasswordInput.value.length < 6) {
+                confirmPasswordError.classList.remove('hidden');
+                confirmPasswordInput.classList.add('border-red-400');
+                valid = false;
+            } else {
+                confirmPasswordError.classList.add('hidden');
+                confirmPasswordInput.classList.remove('border-red-400');
+            }
+
             if (!valid) {
                 e.preventDefault();
             }
         });
 
-        // Optional: live validation as user types
+        // Live validation as user types
         emailInput.addEventListener('input', () => {
             if (isValidEmail(emailInput.value.trim())) {
                 emailError.classList.add('hidden');
                 emailInput.classList.remove('border-red-400');
+            } else {
+                emailError.classList.remove('hidden');
+                emailInput.classList.add('border-red-400');
             }
         });
         passwordInput.addEventListener('input', () => {
             if (passwordInput.value.length >= 6) {
                 passwordError.classList.add('hidden');
                 passwordInput.classList.remove('border-red-400');
+            } else {
+                passwordError.classList.remove('hidden');
+                passwordInput.classList.add('border-red-400');
+            }
+        });
+        confirmPasswordInput.addEventListener('input', () => {
+            if (
+                confirmPasswordInput.value === passwordInput.value &&
+                confirmPasswordInput.value.length >= 6
+            ) {
+                confirmPasswordError.classList.add('hidden');
+                confirmPasswordInput.classList.remove('border-red-400');
+            } else {
+                confirmPasswordError.classList.remove('hidden');
+                confirmPasswordInput.classList.add('border-red-400');
             }
         });
     </script>

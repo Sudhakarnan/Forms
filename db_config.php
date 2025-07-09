@@ -2,7 +2,7 @@
 $servername = "localhost"; 
 $username = "root";
 $password = ""; 
-$dbname = "tc_software_bed";
+$dbname = "amasqis_forms";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
